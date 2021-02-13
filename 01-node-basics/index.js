@@ -4,6 +4,7 @@ import {
   removeContact,
   addContact,
 } from "./contacts.js";
+
 import program from "./helpers/commander.js";
 
 program.parse(process.argv);

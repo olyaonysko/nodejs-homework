@@ -56,10 +56,8 @@ export async function addContact(name, email, phone) {
   try {
     const data = await fs.readFile(contactsPath);
     const parseData = JSON.parse(data.toString());
-    // const newContact = { id: shortid.generate(), name, email, phone };
-    // const contacts = [...parseData, JSON.stringify(newContact)];
 
-    parseData.push({ id: shortid.generate(), name, email, phone });
+    parseData.push({ id: parseData.length + 1, name, email, phone });
     fs.writeFile(contactsPath, JSON.stringify(parseData));
     console.log("Contact added.");
   } catch (error) {
