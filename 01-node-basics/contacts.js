@@ -1,6 +1,5 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import shortid from "shortid";
 
 import getDirname from "./helpers/dirname.js";
 import { handleError } from "./helpers/handleerror.js";
