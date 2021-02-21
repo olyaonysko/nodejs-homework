@@ -14,7 +14,7 @@ const schemaUpdateContact = Joi.object({
   phone: Joi.string()
     .pattern(/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/)
     .optional(),
-});
+}).min(1);
 
 const validate = (schema, obj, next) => {
   const { error } = schema.validate(obj);
