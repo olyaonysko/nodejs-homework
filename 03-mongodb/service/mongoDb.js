@@ -3,21 +3,30 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const URL = process.env.DB_URL;
+const URI = process.env.DB_URI;
 
-const options = {
+const mongoDbConnect = mongoose.connect(URI, {
   useNewUrlParser: true,
+  useCreateIndex: true,
   useUnifiedTopology: true,
-  promiseLibrary: global.Promise,
-};
+  useFindAndModify: false,
+});
 
-const mongoDbConnect = async () => {
-  try {
-    mongoose.connect(URL, options);
-    const db = mongoose.connection;
-    db.once("open", () => console.log("Connected to mongoDB"));
-    db.on("error", console.error.bind(console, "connection error:"));
-  } catch (error) {}
-};
+mongoose.connection.on("connected", () => {
+  console.log("Database connection successful");
+});
+
+mongoose.connection.on("error", (err) => {
+  console.log(`Database connection error: ${err.message}`);
+});
+
+mongoose.connection.on("disconnected", () => {
+  console.log("Database disconnected.");
+});
+
+process.on("SIGINT", async () => {
+  await mongoose.connection.close();
+  process.exit(1);
+});
 
 module.exports = mongoDbConnect;
