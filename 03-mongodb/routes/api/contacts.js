@@ -2,20 +2,20 @@ const express = require("express");
 const router = express.Router();
 
 const validate = require("../api/validation.js");
-const idValidation = require("../api/idValidation");
+const validateId = require("../api/validationId");
 const contactController = require("../../controllers/index");
 
 router.get("/", contactController.listContacts);
 
 router.post("/", validate.createContact, contactController.addContact);
 
-router.get("/:contactId", idValidation, contactController.getContactById);
+router.get("/:contactId", validateId, contactController.getContactById);
 
-router.delete("/:contactId", idValidation, contactController.removeContact);
+router.delete("/:contactId", validateId, contactController.removeContact);
 
 router.patch(
   "/:contactId",
-  idValidation,
+  validateId,
   validate.updateContact,
   contactController.updateContact
 );
